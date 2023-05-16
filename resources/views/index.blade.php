@@ -1,23 +1,37 @@
-<x-layout>
-<header>
-    <x-navbar/>
-</header>
-<aside>
-    <x-sidebar/>
-</aside>
+<x-loginsystem.layout>
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="/" class="h1"><b>Admin</b>LTE</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
 
+                <form action="/login" method="post">
+                    @csrf
+                        <x-form.input  type="email" name="email" id="email" placeholder="Enter Email" class="fas fa-envelope" />
+                        <x-form.error name="email" />
+                        <x-form.input  type="password" name="password" id="password" placeholder="Enter Password" class="fas fa-lock" />
+                        <x-form.error name="password" />
 
-<section class="content-wrapper">
-    <div class="row container">
-    <x-card.card total="150" text="My First text" bgcolor="bg-info" title="My First title" />
-    <x-card.card total="200" text="My Second text" bgcolor="bg-danger" title="My Second title" />
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
 
+                </form>
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a href="/register" class="text-center">Register a new membership</a>
+                </p>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
     </div>
-    <div class="row container">
-        <x-card.sm-card bgcolor="bg-info" text="My Firts Text" price="15000" description="This is my first text"/>
-        <x-card.sm-card bgcolor="bg-danger" text="My Second Text" price="15000" description="This is my second text"/>
-
-    </div>
-</section>
-<x-footer/>
-</x-layout>
+</x-loginsystem.layout>
