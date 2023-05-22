@@ -15,43 +15,32 @@
                     <div class="form-group col-6">
                         <label for="category">Select Category</label>
                         <select class="form-control" name="category_id" id="category">
+                            <option value="Seleted category" selected> Chose category </option>
                             @foreach($categories as $category)
-                            <option value="{{$category->id}}"> {{$category->name}} </option>
+                            <option value="{{$category->id}}" {{  old('category_id') == $category->id ? 'selected' : ' ' }}> {{$category->name}} </option>
                             @endforeach
                         </select>
+                        <x-form.error name="category_id" />
+
                     </div>
                     <div class="col-6">
                         <label for="title">Enter Title</label>
-                        <x-form.input type="text" placeholder="Enter Title" name="name" id="title" />
+                        <x-form.input type="text" placeholder="Enter Title" name="name" id="title" class="icon-pencil" />
                         <x-form.error name="name" />
 
                     </div>
                 </div>
                 <label for="slug"> Enter Slug</label>
-                <x-form.input type="text" placeholder="Enter Slug" name="slug" id="slug" />
+                <x-form.input type="text" placeholder="Enter Slug" name="slug" id="slug" class="icon-pencil" />
                 <x-form.error name="slug" />
                 <x-form.textarea title="Enter Excerpt" placeholder="Enter Sort Description here.." name="excerpt" id="excerpt" />
                 <x-form.error name="excerpt" />
-
                 <x-form.textarea title="Enter Body" placeholder="Enter Description here.." name="body" id="body" />
                 <x-form.error name="body" />
-
-                <div>
-                    <label for="status">Status</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="status" id="status" value="1" checked>
-                    <label class="form-check-label" for="status">Active</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="status" id="status" value="0">
-                    <label class="form-check-label" for="status">Inactive</label>
-                </div>
-
                 <div class="mt-3">
                     <label for="status">Thumbnail</label>
                 </div>
-                <x-form.input type="file" name="image" id="image" placeholder="Select image" />
+                <x-form.input type="file" name="image" id="image" placeholder="Select image"/>
                 <x-form.error name="image" />
 
                 <button type="submit" class="btn btn-primary">Add Category</button>
@@ -78,7 +67,7 @@
             , }
         , });
 
-        $('#img').dropify();
+        $('#image').dropify();
     });
 
 </script>

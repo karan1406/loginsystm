@@ -9,12 +9,15 @@ use Illuminate\View\Component;
 class input extends Component
 {
    public $value = '';
+
+
     /**
      * Create a new component instance.
      */
     public function __construct($value)
     {
         $this->value = $value;
+
     }
 
     /**

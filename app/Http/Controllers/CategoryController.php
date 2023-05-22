@@ -20,10 +20,9 @@ class CategoryController extends Controller
     {
         $attribute = request()->validate([
             'name' => 'required|unique:categories,name',
-            'status' => 'required',
-            'slug' => 'required|unique:categories,slug'
+            'slug' => 'required|unique:posts,slug|unique:categories,slug'
         ]);
-
+        $attribute['status'] = 0;
         $attribute['user_id'] = auth()->id();
         Category::create($attribute);
         session()->flash('success', "Category Added");
@@ -37,11 +36,20 @@ class CategoryController extends Controller
     {
         $attribute = request()->validate([
             'name' => ['required',Rule::unique('categories','name')->ignore($category->id)],
-            'status' => 'required',
-            'slug' => ['required',Rule::unique('categories','slug')->ignore($category->id)]
+            'slug' => 'required|unique:posts,slug|unique:categories,slug,'.$category->id,
+
         ]);
         $category->update($attribute);
         session()->flash('success', "Category Updated");
+
+    }
+
+    public function updateStatus(Category $category)
+    {
+        // dd($category);
+        $data = ['status' => request()->status];
+        $category->update($data);
+        session()->flash('success', "Status Updated");
 
     }
 }

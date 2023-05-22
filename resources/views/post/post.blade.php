@@ -5,7 +5,7 @@
     <aside>
         <x-sidebar />
     </aside>
-
+    <link rel="stylesheet" href="/css/admin.css" />
 
     <section class="content-wrapper">
         <x-card.Main-card title="Manage Post">
@@ -20,7 +20,9 @@
 
                             <th>Posted By</th>
                             <th> Image </th>
+                            @can('edit post')
                             <th> Action </th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -30,15 +32,32 @@
                             <td>{{ $post->id }}</td>
                             <td id="categorynameval">{{ Str::ucfirst($post->category->name) }}</td>
                             <td id="nameval">{{ Str::ucfirst($post->name) }}</td>
-
+                            @can('publish post')
+                            <td>
+                                <p>
+                                    <input type="checkbox" id="switch3-{{ $post->id }}" switch="bool" {{ $post->status
+                                    == '1' ? 'checked' : ' ' }}
+                                    value="{{ $post->id }}" onchange="editStatus({{ $post->id }})" />
+                                    <label for="switch3-{{ $post->id }}" data-on-label="Active"
+                                        data-off-label="Inactive"></label>
+                                </p>
+                            </td>
+                            @else
                             <td id="status">{{ $post->status == '1' ? 'Active' : 'Inactive' }}</td>
+                            @endcan
+
 
                             <td>{{ $post->user->name }}</td>
-                            <td> <img src="{{$post->image}}" height="100" width="100"></td>
-                            <td> 
-                                <a name="editbtn" id="editbtn" class="btn btn-primary" href="{{route('posts.edit',$post->id)}}" role="button"> <i class="icon-edit" style="font-size: 20px"></i></a>
-                                <button type="button" class="btn btn-danger" id="dltbtn" value="{{ $post->id }}"><i class="icon-trash" style="font-size: 20px"></i></button>
+                            <td> <img src="{{ $post->image }}" height="100" width="100"></td>
+                            @can('edit post')
+                            <td>
+                                <a name="editbtn" id="editbtn" class="btn btn-primary"
+                                    href="{{ route('posts.edit', $post->id) }}" role="button"> <i class="icon-edit"
+                                        style="font-size: 20px"></i></a>
+                                <button type="button" class="btn btn-danger" id="dltbtn" value="{{ $post->id }}"><i
+                                        class="icon-trash" style="font-size: 20px"></i></button>
                             </td>
+                            @endcan
                         </tr>
                         @endforeach
 
@@ -56,6 +75,12 @@
     <x-footer />
 
 </x-layout>
+@if (session()->get('success'))
+<script>
+toastr["success"]("{{session('success')}}");
+
+</script>
+@endif
 <script>
     $(document).ready(function() {
         $("#datatable").DataTable();
@@ -67,27 +92,27 @@
             url = url.replace(':id', id);
             console.log(url);
             Swal.fire({
-                title: 'Are you sure?'
-                , text: "You won't be able to revert this!"
-                , icon: 'warning'
-                , showCancelButton: true
-                , confirmButtonColor: '#3085d6'
-                , cancelButtonColor: '#d33'
-                , confirmButtonText: 'Yes, delete it!'
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        type: "DELETE"
-                        , url: url
-                        , data: {
-                            '_token': '{{ csrf_token() }}'
-                        , },
+                        type: "DELETE",
+                        url: url,
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                        },
                         // cache = false,
                         success: function(response) {
                             console.log("callback function");
                             window.location.reload();
-                        }
-                        , error: function(dataResult) {
+                        },
+                        error: function(dataResult) {
                             console.log(dataResult);
                         }
 
@@ -99,15 +124,42 @@
 
     });
 
+    function editStatus(id)
+    {
+        console.log(id);
+        var val = $('#switch3'+'-'+id).is(":checked");
+        console.log(val);
+        var status = (val == false ? 0 : 1);
+        var url = '/post/updateState/' + id;
+        console.log(status);
+        $.ajax({
+            type: "PATCH"
+            , url: url
+            , data: {
+                '_token': '{{ csrf_token() }}'
+                , 'status': status
+            },
+            // cache = false,
+            success: function(response) {
+                console.log("callback function");
+                window.location.reload();
+            }
+            , error: function(dataResult) {
+                console.log(dataResult);
+            }
+
+        });
+    }
 </script>
 @if (session()->get('success'))
-    <script>
-        $.toast({
+<script>
+    $.toast({
             heading: 'Success',
-            text: '{{ session('success') }}',
+            text: '{{ session('
+                    success ') }}',
             position: 'top-left',
             icon: 'success',
             stack: false
         });
-    </script>
+</script>
 @endif

@@ -16,22 +16,15 @@
                         <input type="text" name="name" id="name" class="form-control"
                             placeholder="Enter category" aria-describedby="helpId">
                     </div> --}}
-                    <x-form.input title="Name" type="text" name="{{$name1}}" id="{{$id1}}"
-                        placeholder="Enter category" />
+                    <x-form.input title="Name" type="text" name="{{$nameinput1}}" id="{{$idinput1}}"
+                        placeholder="Enter category" class="icon-pencil" />
                     <p class="text-sm text-danger" id="err-name"> </p>
 
-                    <x-form.input title="Slug" type="text" name="{{$name2}}" id="{{$id2}}"
-                        placeholder="Enter Slug" />
-                    <p class="text-sm text-danger" id="err-slug"> </p>
+                    <x-form.input title="Slug" type="text" name="{{$nameinput2}}" id="{{$idinput2}}"
+                        placeholder="Enter Slug" class="icon-pencil"/>
+                    <p class="text-sm text-danger" id="err-slug" >  </p>
 
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="{{$status}}" id="status" value="1" checked>
-                        <label class="form-check-label" for="status">Active</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="{{$status}}" id="status" value="0">
-                        <label class="form-check-label" for="status">Inactive</label>
-                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">

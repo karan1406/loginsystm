@@ -26,13 +26,13 @@
                     </div>
                     <div class="col-6">
                         <label for="title">Enter Title</label>
-                        <x-form.input type="text" placeholder="Enter Title" name="name" id="title" :value="old('name',$posts->name)" />
+                        <x-form.input type="text" placeholder="Enter Title" name="name" id="title" :value="old('name',$posts->name)" class="icon-pencil" />
                         <x-form.error name="name" />
 
                     </div>
                 </div>
                 <label for="slug"> Enter Slug</label>
-                <x-form.input type="text" placeholder="Enter Slug" name="slug" id="slug" :value="old('slug',$posts->slug)" />
+                <x-form.input type="text" placeholder="Enter Slug" name="slug" id="slug" :value="old('slug',$posts->slug)" class="icon-pencil"/>
                 <x-form.error name="slug" />
                 <x-form.textarea title="Enter Excerpt" placeholder="Enter Sort Description here.." name="excerpt" id="excerpt">
                     {{old('name',$posts->excerpt)}}
@@ -42,17 +42,7 @@
                 <x-form.textarea title="Enter Body" placeholder="Enter Description here.." name="body" id="body"> {!! old('name',$posts->body) !!} </x-form.textarea>
                 <x-form.error name="body" />
 
-                <div>
-                    <label for="status">Status</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="status" id="status" value="1" {{$posts->status == 1 ? 'checked' : ''}}>
-                    <label class="form-check-label" for="status">Active</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="status" id="status" value="0" {{$posts->status == 0 ? 'checked' : ''}}>
-                    <label class="form-check-label" for="status">Inactive</label>
-                </div>
+
 
                 <div class="mt-3">
                     <label for="status">Thumbnail</label>
@@ -60,13 +50,13 @@
 
                 <x-form.input type="file" name="image" id="image" :value="old('image',$posts->image)" placeholder="Select image" />
                 <x-form.error name="image" />
-            
-                <button type="submit" class="btn btn-primary mt-5s">Edit Category</button>
+
+                <button type="submit" class="btn btn-primary mt-5s">Edit Post</button>
             </form>
         </x-card.Main-card>
     </section>
 
-    <x-footer />
+    <x-footer/>
 
 </x-layout>
 <script>

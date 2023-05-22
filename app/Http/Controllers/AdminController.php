@@ -18,6 +18,19 @@ class AdminController extends Controller
             return back()->withErrors(['email' => "Your provided credentials could not be verified"]);
         }
         session()->regenerate();
+
+        if(auth()->user()->hasRole('visitor'))
+        {
+            return redirect('/standblog');
+        }
+        else{
         return redirect('/admin')->with('success','Welcome Back');
+        }
+    }
+
+    public function destroy()
+    {
+      auth()->logout();
+      return redirect('/');
     }
 }
