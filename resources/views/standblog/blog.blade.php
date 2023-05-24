@@ -42,17 +42,18 @@
                                         <p> {{ $post->excerpt }}</p>
                                         <div class="post-options">
                                             <div class="row">
-                                                <div class="col-lg-12">
-
+                                                <div class="col-6">
                                                     <ul class="post-tags">
-                                                        <li><i class="fa fa-tags"></i></li>
-                                                        <li><a href="/postdetail/{{ $post->slug }}">{{ $post->name
-                                                                }}</a>,
-                                                        </li>
-
+                                                        {{-- <li><i class="fa fa-tags"></i></li> --}}
+                                                        <li><a href="/postdetail/{{$post->slug}}">{{ $post->name }}</a>,</li>
                                                     </ul>
                                                 </div>
-
+                                                <div class="col-6">
+                                                    <ul class="post-share">
+                                                        <li><i class='fas fa-comment' style='font-size:20px;color:#f48840'></i> {{ count($post->comments)}}</li>
+                                                        <li><i class="fa fa-heart" style="font-size:20px;color:#f48840"></i>   {{ count($post->likes->where('status', 1)) }}</li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

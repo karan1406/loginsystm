@@ -75,6 +75,14 @@
                   </p>
                 </a>
             </li>
+            <li class="nav-item ">
+                <a href="{{route('comments.index')}}" class="nav-link  {{ (Route::is('comments.index')) ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Manage Comment
+                  </p>
+                </a>
+            </li>
             @endrole
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->

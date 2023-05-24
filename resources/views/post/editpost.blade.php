@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <label for="slug"> Enter Slug</label>
-                <x-form.input type="text" placeholder="Enter Slug" name="slug" id="slug" :value="old('slug',$posts->slug)" class="icon-pencil"/>
+                <x-form.input type="text" placeholder="Enter Slug(Space not allowed)" name="slug" id="slug" :value="old('slug',$posts->slug)" class="icon-pencil"/>
                 <x-form.error name="slug" />
                 <x-form.textarea title="Enter Excerpt" placeholder="Enter Sort Description here.." name="excerpt" id="excerpt">
                     {{old('name',$posts->excerpt)}}

@@ -31,7 +31,7 @@
                     <!-- /.col -->
 
                 </form>
-                <a href="/" class="text-center">I already have a membership</a>
+                <a href="/login" class="text-center">I already have a membership</a>
             </div>
             <!-- /.form-box -->
         </div><!-- /.card -->

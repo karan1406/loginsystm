@@ -41,7 +41,7 @@ class PostCOntroller extends Controller
             'category_id' =>  ['required', Rule::exists('categories', 'id')],
             'name' => 'required',
             'excerpt' => 'required',
-            'slug' => 'required|unique:posts,slug,' . $post->id . '|unique:categories,slug',
+            'slug' => 'required|unique:posts,slug,' . $post->id . '|unique:categories,slug|regex:/(^[a-zA-Z-]+[a-zA-Z-]*$)/u',
             'body' => 'required',
             'image' => 'required'
         ]);
@@ -110,7 +110,7 @@ class PostCOntroller extends Controller
             'category_id' =>  ['required', Rule::exists('categories', 'id')],
             'name' => 'required',
             'excerpt' => 'required',
-            'slug' => 'required|unique:posts,slug,' . $post->id . '|unique:categories,slug',
+            'slug' => 'required|unique:posts,slug,' . $post->id . '|unique:categories,slug|regex:/(^[a-zA-Z-]+[a-zA-Z-]*$)/u',
             'body' => 'required',
             'image' => $post->exists ? ['image'] : 'required|image'
         ]);

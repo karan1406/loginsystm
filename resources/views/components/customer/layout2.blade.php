@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="/assets/css/fontawesome.css">
     <link rel="stylesheet" href="/assets/css/templatemo-stand-blog.css">
     <link rel="stylesheet" href="/assets/css/owl.css">
+    <link rel="stylesheet" href="/css/standblog.css">
+    <link href="/toastr/build/toastr.min.css" rel="stylesheet" type="text/css">
+
 
 </head>
 
@@ -37,7 +40,7 @@
 <script src="/assets/js/isotope.js"></script>
 <script src="/assets/js/accordions.js"></script>
 
-
-
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="/toastr/build/toastr.min.js"></script>
 
 </html>

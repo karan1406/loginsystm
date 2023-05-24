@@ -21,7 +21,7 @@
                     <p class="text-sm text-danger" id="err-name"> </p>
 
                     <x-form.input title="Slug" type="text" name="{{$nameinput2}}" id="{{$idinput2}}"
-                        placeholder="Enter Slug" class="icon-pencil"/>
+                        placeholder="Enter Slug(Space not allowed)" class="icon-pencil"/>
                     <p class="text-sm text-danger" id="err-slug" >  </p>
 
 

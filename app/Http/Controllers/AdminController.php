@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function create()
     {
+
         $attribute = request()->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -21,7 +24,7 @@ class AdminController extends Controller
 
         if(auth()->user()->hasRole('visitor'))
         {
-            return redirect('/standblog');
+            return redirect('/');
         }
         else{
         return redirect('/admin')->with('success','Welcome Back');

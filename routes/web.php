@@ -4,11 +4,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use GuzzleHttp\Middleware;
@@ -31,7 +34,9 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/admin',function(){
-  return view('admin.admin');
+    $posts = Post::all();
+    $comments = Comment::all();
+  return view('admin.admin',compact('posts','comments'));
 })->middleware('auth');
 
 
@@ -68,6 +73,7 @@ Route::get('/author/{user}',function(User $user){
         // 'posts' => Post::all()
     ]);
 });
+// Route::get('/login',[AdminController::class,'create']);
 Route::post('/login',[AdminController::class,'create']);
 Route::get('/register',[RegisterController::class,'create']);
 Route::post('/register',[RegisterController::class,'store']);
@@ -76,6 +82,10 @@ Route::post('/logout',[AdminController::class,'destroy']);
 
 
 Route::resource('posts', PostController::class)->middleware('auth');
+Route::resource('comments', CommentController::class)->middleware('auth');
+Route::resource('likes', LikeController::class)->middleware('auth');
+
+
 
 
 

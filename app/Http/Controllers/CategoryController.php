@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $attribute = request()->validate([
             'name' => 'required|unique:categories,name',
-            'slug' => 'required|unique:posts,slug|unique:categories,slug'
+            'slug' => 'required|unique:posts,slug|unique:categories,slug|regex:/(^[a-zA-Z-]+[a-zA-Z-]*$)/u'
         ]);
         $attribute['status'] = 0;
         $attribute['user_id'] = auth()->id();

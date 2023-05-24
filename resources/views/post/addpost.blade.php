@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <label for="slug"> Enter Slug</label>
-                <x-form.input type="text" placeholder="Enter Slug" name="slug" id="slug" class="icon-pencil" />
+                <x-form.input type="text" placeholder="Enter Slug(Space not allowed)" name="slug" id="slug" class="icon-pencil" />
                 <x-form.error name="slug" />
                 <x-form.textarea title="Enter Excerpt" placeholder="Enter Sort Description here.." name="excerpt" id="excerpt" />
                 <x-form.error name="excerpt" />
@@ -43,7 +43,7 @@
                 <x-form.input type="file" name="image" id="image" placeholder="Select image"/>
                 <x-form.error name="image" />
 
-                <button type="submit" class="btn btn-primary">Add Category</button>
+                <button type="submit" class="btn btn-primary">Add Post</button>
             </form>
         </x-card.Main-card>
     </section>

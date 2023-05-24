@@ -16,7 +16,7 @@
                         </a>
                     </li>
                     @auth
-                    <a class="nav-link" href="standblog">
+                    <a class="nav-link" href="/">
                         <span >  Welcome , {{ auth()->user()->name }}!
                         </span>
                     </a>
@@ -25,7 +25,7 @@
                     <li class="nav-item">
                         <form action="/logout" method="post">
                             @csrf
-                            <button type="submit" class="border-0 mt-2 "> <i class="fa fa-sign-out" style="font-size: 20px" aria-hidden="true"></i></button>
+                            <button type="submit" class="border-0 btn btn-light">  Log Out</button>
                         </form>
                     </li>
                     @else

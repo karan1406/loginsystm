@@ -228,7 +228,7 @@
                         // cache = false,
                         success: function(response) {
                             console.log("callback function");
-                            // window.location.reload();
+                            window.location.reload();
                         }
                         , error: function(dataResult) {
                             console.log(dataResult);
