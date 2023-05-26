@@ -22,7 +22,7 @@ class RegisterController extends Controller
 
 
         $user = User::create($data);
-        $user->assignROle('visitor');
+
         session()->flash('success','Your account has been created..');
         return redirect('/login');
     }

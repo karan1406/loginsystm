@@ -2,6 +2,10 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\MustBeCategory;
+use App\Http\Middleware\MustBePostPermission;
+use App\Http\Middleware\MustBeRolePermission;
+use App\Http\Middleware\MustBeUserPermission;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -54,6 +58,10 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'category' => MustBeCategory::class,
+        'post' => MustBePostPermission::class,
+        'user' => MustBeUserPermission::class,
+        'roles' => MustBeRolePermission::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

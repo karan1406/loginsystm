@@ -20,9 +20,9 @@
 
                             <th>Posted By</th>
                             <th> Image </th>
-                            @can('edit post')
+                            @canany(['post edit','post delete'])
                             <th> Action </th>
-                            @endcan
+                            @endcanany
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +32,7 @@
                             <td>{{ $post->id }}</td>
                             <td id="categorynameval">{{ Str::ucfirst($post->category->name) }}</td>
                             <td id="nameval">{{ Str::ucfirst($post->name) }}</td>
-                            @can('publish post')
+                            @can('post publish')
                             <td>
                                 <p>
                                     <input type="checkbox" id="switch3-{{ $post->id }}" switch="bool" {{ $post->status
@@ -49,15 +49,19 @@
 
                             <td>{{ $post->user->name }}</td>
                             <td> <img src="{{ $post->image }}" height="100" width="100"></td>
-                            @can('edit post')
+                            @canany(['post edit','post delete'])
                             <td>
+                                @can('post edit')
                                 <a name="editbtn" id="editbtn" class="btn btn-primary"
                                     href="{{ route('posts.edit', $post->id) }}" role="button"> <i class="icon-edit"
                                         style="font-size: 20px"></i></a>
+                                        @endcan
+                                        @can('post delete')
                                 <button type="button" class="btn btn-danger" id="dltbtn" value="{{ $post->id }}"><i
                                         class="icon-trash" style="font-size: 20px"></i></button>
+                                        @endcan
                             </td>
-                            @endcan
+                            @endcanany
                         </tr>
                         @endforeach
 

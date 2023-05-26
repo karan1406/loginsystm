@@ -19,7 +19,7 @@ $categories = new App\Models\Category();
                     </div>
                     <div class="content">
                         <ul>
-                            @foreach ($posts->take(3) as $post)
+                            @foreach ($posts->where('status','1')->take(3) as $post)
                             <li><a href="/postdetail/{{ $post->slug }}">
                                     <h5>{{ $post->excerpt }}</h5>
                                     <span> {{ $post->updated_at->diffForHumans() }}</span>
@@ -44,7 +44,7 @@ $categories = new App\Models\Category();
                                         <li><a href="/categorydetail/{{ $category->slug }}">-
                                                 {{ ucfirst($category->name) }}</a> </li>
                                     <td> <span style="margin-left:900%">
-                                            ({{ count($category->posts) }})
+                                            ({{ count($category->posts->where('status','1')) }})
                                         </span></td>
                                     </td>
                                 </tr>

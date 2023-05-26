@@ -14,7 +14,7 @@
 
     {{-- @dd($posts) --}}
 
-   <x-customer.header-text title="{{ ((request()->is('post/blog')) ? 'Post' : (request()->is('author/*'))) ? $posts[0]->user->name : $posts[0]->category->name}}" />
+   <x-customer.header-text title="{{ Str::contains(url()->current(),'post') ? 'Post' : (Str::contains(url()->current(),'author' )  ? $posts[0]->user->name : $posts[0]->category->name)}}" />
 
 
     <section class="blog-posts grid-system">
@@ -23,7 +23,7 @@
                 <div class="col-lg-8">
                     <div class="all-blog-posts">
                         <div class="row">
-                            @foreach ($posts as $post)
+                            @foreach ($posts->where('status','1') as $post)
                             <div class="col-lg-6">
                                 <div class="blog-post">
                                     <div class="blog-thumb">

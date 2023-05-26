@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule as ValidationRule;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -22,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.role.addrole');
     }
 
     /**
@@ -45,7 +48,7 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -53,15 +56,26 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $role = Role::findById($id);
+        $rolePermissions = $role->getAllPermissions();
+        // dd($role);
+        return view('user.role.editrole',compact('role','rolePermissions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        // dd($request->permission);
+        $request->validate([
+            'name' => ['required',ValidationRule::unique('roles','name')->ignore($role->id)],
+            'permission' => 'required'
+        ]);
+        $role->update(['name' => $request->name]);
+        $role->syncPermissions($request->permission);
+        session()->flash('successpermission','Role Updated');
+
     }
 
     /**

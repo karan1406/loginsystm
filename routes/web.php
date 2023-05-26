@@ -81,16 +81,19 @@ Route::post('/logout',[AdminController::class,'destroy']);
 
 
 
-Route::resource('posts', PostController::class)->middleware('auth');
+Route::resource('posts', PostController::class)->middleware('post');
 Route::resource('comments', CommentController::class)->middleware('auth');
 Route::resource('likes', LikeController::class)->middleware('auth');
 
+Route::get('/403',function(){
+      abort(403);
+});
 
 
 
 
 Route::group([
-    'middleware' => ['auth','role:admin'],
+    'middleware' => ['category','auth'],
 ],function () {
     Route::get('/category',[CategoryController::class,'create'])->middleware('auth');
     Route::post('/category/store',[CategoryController::class,'store'])->name('category.store')->middleware('auth');
@@ -104,14 +107,16 @@ Route::group([
 
 
 
-Route::group([
-    'middleware' => ['auth'],],function(){
-        Route::resources([
-            'users' => UserController::class,
-            'roles' => RoleController::class
-        ]);
-    });
+// Route::group([
+//     'middleware' => ['role','user','auth'],],function(){
+//         Route::resources([
+//             'users' => UserController::class,
+//             'roles' => RoleController::class
+//         ]);
+//     });
 
+Route::resource('users',UserController::class)->middleware('user');
+Route::resource('roles',RoleController::class)->middleware('roles');
 
 
 // Route::resource('users',UserController::class);

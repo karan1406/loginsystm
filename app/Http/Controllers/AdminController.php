@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -22,12 +23,14 @@ class AdminController extends Controller
         }
         session()->regenerate();
 
-        if(auth()->user()->hasRole('visitor'))
+        if(auth()->user()->hasAnyRole(Role::all()))
         {
-            return redirect('/');
+        return redirect('/admin')->with('success','Welcome Back');
+
         }
         else{
-        return redirect('/admin')->with('success','Welcome Back');
+            return redirect('/');
+
         }
     }
 

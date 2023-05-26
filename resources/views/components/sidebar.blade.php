@@ -40,7 +40,7 @@
                   </p>
                 </a>
             </li>
-            @role('admin')
+            @canany(['category access', 'category edit', 'category write','category delete'])
             <li class="nav-item ">
                 <a href="/category" class="nav-link  {{ (request()->is('category')) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -49,7 +49,8 @@
                   </p>
                 </a>
             </li>
-            @endrole
+            @endcanany
+            @canany(['post access', 'post edit', 'post write','post delete','post publish'])
             <li class="nav-item ">
                 <a href="{{route('posts.index')}}" class="nav-link  {{ (Route::is('posts.index')) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -58,7 +59,8 @@
                   </p>
                 </a>
             </li>
-            @role('admin')
+            @endcanany
+            @canany(['role access', 'role edit', 'role write','role delete'])
             <li class="nav-item ">
                 <a href="{{route('roles.index')}}" class="nav-link  {{ (Route::is('roles.index')) ? 'active' : '' }}"">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -67,6 +69,8 @@
                   </p>
                 </a>
             </li>
+            @endcanany
+            @canany(['user access', 'user edit', 'user write','user delete'])
             <li class="nav-item ">
                 <a href="{{route('users.index')}}" class="nav-link  {{ (Route::is('users.index')) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -75,6 +79,7 @@
                   </p>
                 </a>
             </li>
+            @endcanany
             <li class="nav-item ">
                 <a href="{{route('comments.index')}}" class="nav-link  {{ (Route::is('comments.index')) ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -83,8 +88,8 @@
                   </p>
                 </a>
             </li>
-            @endrole
-          <!-- Add icons to the links using the .nav-icon class
+
+          <!-- write icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           {{-- <li class="nav-item menu-open">
             <a href="#" class="nav-link active">

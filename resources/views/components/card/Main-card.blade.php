@@ -7,23 +7,30 @@
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <div class="input-group-append rounded-sm ml-5">
                         @if (request()->is('category'))
-                            @role('admin')
+                            @can('category write')
                                 <button type="button" class="btn btn-primary rounded-sm justify-end ml-3" data-toggle="modal"
                                     data-target="#addModal">
                                     Add <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
-                            @endrole
+                            @endcan
                         @elseif(request()->is('posts'))
-                            @can('write post')
+                            @can('post write')
                                 <a name="addbtn" id="addbtn" class="btn btn-primary  rounded-sm justify-end ml-3"
                                     href="{{ route('posts.create') }}" role="button"> Add <i class="fa fa-plus"
                                         aria-hidden="true"></i></a>
                             @endcan
                         @elseif(request()->is('roles'))
-                            <a name="addbtn" id="addbtn" class="btn btn-primary  rounded-sm justify-end ml-3"
-                                 role="button" data-toggle="modal"
-                                 data-target="#addRoleModal"> Add <i class="fa fa-plus"
-                                    aria-hidden="true"></i></a>
+                            @can('role write')
+                                <a name="addbtn" class="btn btn-primary  rounded-sm justify-end ml-3"
+                                    href="{{ route('roles.create') }}"> Add <i class="fa fa-plus"
+                                        aria-hidden="true"></i></a>
+                            @endcan
+                        @elseif(request()->is('users'))
+                            @can('user write')
+                                <button type="button" data-toggle="modal" data-target="#addModal" class="btn btn-primary rounded-sm justify-end ml-3">
+                                    Add <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            @endcan
                         @else
                         @endif
                     </div>

@@ -20,31 +20,52 @@
                             <th>Category Slug </th>
                             <th>Status</th>
                             <th>Created By</th>
-                            <th> Action </th>
+                            @canany(['category edit', 'category delete'])
+                                <th> Action </th>
+                            @endcanany
                         </tr>
                     </thead>
                     <tbody>
 
                         @foreach ($categories as $category)
-                        <tr>
-                            <td>{{ $category->id }}</td>
-                            <td id="nameval">{{ Str::ucfirst($category->name) }}</td>
-                            <td id="slugval">{{ Str::ucfirst($category->slug) }}</td>
+                            <tr>
+                                <td>{{ $category->id }}</td>
+                                <td id="nameval">{{ Str::ucfirst($category->name) }}</td>
+                                <td id="slugval">{{ Str::ucfirst($category->slug) }}</td>
 
-                            {{-- <td id="status">{{ $category->status == '1' ? 'Active' : 'Inactive' }} --}}
-                            <td id="tr-table">
-                                <p>
-                                    <input type="checkbox" id="switch3-{{$category->id}}" switch="bool" {{ $category->status == '1' ?
-                                    'checked' : ' ' }} value="{{ $category->id }}"  onchange="editStatus({{$category->id}})" />
-                                    <label for="switch3-{{$category->id}}" data-on-label="Active" data-off-label="Inactive"></label>
-                                </p>
-                            </td>
-                            <td>{{ $category->user->name }}</td>
-                            <td> <button type="button" class="btn btn-primary" id="editbtn" value="{{ $category->id }}"><i class="icon-edit" style="font-size: 20px"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger" id="dltbtn" value="{{ $category->id }}"><i class="icon-trash" style="font-size: 20px"></i></button>
-                            </td>
-                        </tr>
+
+                                <td id="tr-table">
+                                    <p>
+                                        <input type="checkbox" id="switch3-{{ $category->id }}" switch="bool"
+                                            {{ $category->status == '1' ? 'checked' : ' ' }} value="{{ $category->id }}"
+                                            onchange="editStatus({{ $category->id }})"
+                                            @can('category edit')
+                                                  @disabled(false)
+                                                  @else
+                                                  @disabled(true)
+
+                                                @endcan>
+                                        <label for="switch3-{{ $category->id }}" data-on-label="Active"
+                                            data-off-label="Inactive"></label>
+                                    </p>
+                                </td>
+
+                                <td>{{ $category->user->name }}</td>
+                                @canany(['category edit', 'category delete'])
+                                    <td>
+                                        @can('category edit')
+                                            <button type="button" class="btn btn-primary" id="editbtn"
+                                                value="{{ $category->id }}"><i class="icon-edit" style="font-size: 20px"></i>
+                                            </button>
+                                        @endcan
+                                        @can('category delete')
+                                            <button type="button" class="btn btn-danger" id="dltbtn"
+                                                value="{{ $category->id }}"><i class="icon-trash"
+                                                    style="font-size: 20px"></i></button>
+                                        @endcan
+                                    </td>
+                                @endcanany
+                            </tr>
                         @endforeach
 
 
@@ -59,15 +80,16 @@
     <!-- Button trigger modal -->
 
 
-    <x-modal idname="addModal" title="Add Category" btnid="adddata" nameinput1="name" idinput1="name" nameinput2="slug" idinput2="slug" status="status" />
-    <x-modal idname="editModal" title="Add Edit Category" btnid="editdata" nameinput1="editname" idinput1="editname" nameinput2="editslug" idinput2="editslug" status="status2" />
+    <x-modal idname="addModal" title="Add Category" btnid="adddata" nameinput1="name" idinput1="name" nameinput2="slug"
+        idinput2="slug" status="status" />
+    <x-modal idname="editModal" title="Add Edit Category" btnid="editdata" nameinput1="editname" idinput1="editname"
+        nameinput2="editslug" idinput2="editslug" status="status2" />
 
 </x-layout>
 @if (session()->get('success'))
-<script>
-toastr["success"]("{{session('success')}}");
-
-</script>
+    <script>
+        toastr["success"]("{{ session('success') }}");
+    </script>
 @endif
 
 <script>
@@ -86,20 +108,20 @@ toastr["success"]("{{session('success')}}");
 
 
             $.ajax({
-                type: "POST"
-                , url: "{{ route('category.store') }}"
-                , data: {
-                    '_token': '{{ csrf_token() }}'
-                    , 'type': 1
-                    , 'name': name
-                    , 'slug': slug
+                type: "POST",
+                url: "{{ route('category.store') }}",
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'type': 1,
+                    'name': name,
+                    'slug': slug
                 },
                 // cache = false,
                 success: function(response) {
                     console.log("callback function");
                     window.location.reload();
-                }
-                , error: function(dataResult) {
+                },
+                error: function(dataResult) {
                     console.log(dataResult);
                     $error = dataResult.responseJSON.errors;
                     if (dataResult.status == 422) {
@@ -132,21 +154,21 @@ toastr["success"]("{{session('success')}}");
             var url = "{{ route('category.update', ':id') }}";
             url = url.replace(':id', id);
             $.ajax({
-                type: "PATCH"
-                , url: url
-                , data: {
-                    '_token': '{{ csrf_token() }}'
-                    , 'type': 1
-                    , 'name': name
-                    , 'status': status
-                    , 'slug': slug
+                type: "PATCH",
+                url: url,
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'type': 1,
+                    'name': name,
+                    'status': status,
+                    'slug': slug
                 },
                 // cache = false,
                 success: function(response) {
                     console.log("callback function");
                     window.location.reload();
-                }
-                , error: function(dataResult) {
+                },
+                error: function(dataResult) {
                     console.log(dataResult);
                     $error = dataResult.responseJSON.errors;
                     if (dataResult.status == 422) {
@@ -168,27 +190,27 @@ toastr["success"]("{{session('success')}}");
             url = url.replace(':id', id);
             console.log(url);
             Swal.fire({
-                title: 'Are you sure?'
-                , text: "You won't be able to revert this!"
-                , icon: 'warning'
-                , showCancelButton: true
-                , confirmButtonColor: '#3085d6'
-                , cancelButtonColor: '#d33'
-                , confirmButtonText: 'Yes, delete it!'
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        type: "DELETE"
-                        , url: url
-                        , data: {
-                            '_token': '{{ csrf_token() }}'
-                        , },
+                        type: "DELETE",
+                        url: url,
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                        },
                         // cache = false,
                         success: function(response) {
                             console.log("callback function");
                             window.location.reload();
-                        }
-                        , error: function(dataResult) {
+                        },
+                        error: function(dataResult) {
                             console.log(dataResult);
                         }
 
@@ -202,29 +224,28 @@ toastr["success"]("{{session('success')}}");
 
     function editStatus(id) {
         console.log(id);
-        var val = $('#switch3'+'-'+id).is(":checked");
+        var val = $('#switch3' + '-' + id).is(":checked");
         console.log(val);
         var status = (val == false ? 0 : 1);
         var url = '/category/updateState/' + id;
         console.log(status);
         $.ajax({
-            type: "PATCH"
-            , url: url
-            , data: {
-                '_token': '{{ csrf_token() }}'
-                , 'status': status
+            type: "PATCH",
+            url: url,
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'status': status
             },
             // cache = false,
             success: function(response) {
                 console.log("callback function");
                 window.location.reload();
-            }
-            , error: function(dataResult) {
+            },
+            error: function(dataResult) {
                 console.log(dataResult);
             }
 
         });
 
     }
-
 </script>

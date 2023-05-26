@@ -20,11 +20,17 @@
                             @foreach ($posts as $post)
                                <x-customer.post-grid :post="$post" />
                             @endforeach
+                            @if(count($posts) != 0)
                             <div class="col-lg-12">
                                 <div class="main-button">
                                     <a href="/post/blog">View All Posts</a>
                                 </div>
                             </div>
+                            @else
+                            <div class="text-sm">
+                                <h1> No Post Are There</h1>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

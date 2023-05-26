@@ -14,9 +14,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::where('id','!=',auth()->id())->with('roles')->get();
-        return view('user.adduser',[
-            'users' => User::all()->skip(auth()->id()),
+        // $role = Role::findByName('Super Admin');
+        // $role;
+        // dd($role);
+        // dd(User::all()->skip());
+
+        // $user = User::where('id','!=',auth()->id())->with('roles')->get();
+        return view('user.index',[
+            'users' => User::where('id','!=',auth()->id())->with('roles')->get(),
             'roles' => Role::all()
         ]);
     }
@@ -26,14 +31,24 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store()
     {
+        $data = request()->validate([
+            'name' => 'required|min:3|max:50|unique:users,name',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'min:6',
+            'role' => 'required'
+        ]);
+
+        $user = User::create($data);
+        $user->assignROle(request()->role);
+        session()->flash('success','User Addes Successfully..');
         //
     }
 
@@ -62,9 +77,9 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'status' => 'required'
+            'role' => 'required'
         ]);
-        $user->syncRoles([$request->status]);
+        $user->syncRoles([$request->role]);
         $user->update($data);
         session()->flash('successpermission','User details Edited');
 

@@ -13,26 +13,35 @@ class usermodal extends Component
     public $btnid = '';
     public $roles;
 
-    public $nameinput1 = '';
-    public $nameinput2 = '';
-    public $idinput1 = '';
+    public $username = '';
+    public $userid = '';
+    public $emialinput = '';
 
-    public $idinput2 = '';
+    public $emailid = '';
+    public $passwordinput = '';
+    public $passowrdid = '';
+    public $page = '';
+    public $rolename = '';
+
 
     /**
      * Create a new component instance.
      */
-    public function __construct($idname,$title,$btnid,$roles,$nameinput1,$nameinput2,$idinput1,$idinput2)
+    public function __construct($idname,$title,$rolename,$btnid,$Username,$userid,$emialinput,$emailid,$page,$roles,$passwordinput = '',$passowrdid = '')
     {
         $this->idname = $idname;
         $this->title = $title;
         $this->btnid = $btnid;
         $this->roles = $roles;
-        $this->nameinput1 = $nameinput1;
-        $this->nameinput2 = $nameinput2;
-        $this->idinput1 = $idinput1;
-        $this->idinput2 = $idinput2;
-
+        $this->username = $Username;
+        $this->userid = $userid;
+        $this->emialinput = $emialinput;
+        $this->emailid = $emailid;
+        $this->passwordinput = $passwordinput;
+        $this->passowrdid = $passowrdid;
+        $this->page = $page;
+        $this->roles = $roles;
+        $this->rolename = $rolename;
     }
 
     /**

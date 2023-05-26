@@ -1,3 +1,4 @@
+@can('post write')
 <x-layout>
     <header>
         <x-navbar />
@@ -71,3 +72,8 @@
     });
 
 </script>
+@else
+ <script>
+    window.location.href = "/403"
+  </script>
+@endif
