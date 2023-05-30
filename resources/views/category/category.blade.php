@@ -40,11 +40,11 @@
                                             {{ $category->status == '1' ? 'checked' : ' ' }} value="{{ $category->id }}"
                                             onchange="editStatus({{ $category->id }})"
                                             @can('category edit')
-                                                  @disabled(false)
-                                                  @else
-                                                  @disabled(true)
+                                    @disabled(false)
+                                    @else
+                                    @disabled(true)
 
-                                                @endcan>
+                                    @endcan>
                                         <label for="switch3-{{ $category->id }}" data-on-label="Active"
                                             data-off-label="Inactive"></label>
                                     </p>
@@ -248,4 +248,14 @@
         });
 
     }
+
+    $('.modal').on('hidden.bs.modal', function(e) {
+        $(this)
+            .find("input,textarea,select")
+            .val('')
+            .end()
+            .find("input[type=checkbox], input[type=radio]")
+            .prop("checked", "")
+            .end();
+    })
 </script>

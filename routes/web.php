@@ -6,16 +6,20 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NotifyController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Mail\PostMail;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Routing\RouteGroup;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
 /*
@@ -30,8 +34,11 @@ use Spatie\Permission\Models\Role;
 */
 
 Route::get('/login', function () {
+    // dd(request()->session('url'));
     return view('index');
-})->name('login');
+})
+->middleware(['guest'])
+->name('login');
 
 Route::get('/admin',function(){
     $posts = Post::all();
@@ -81,7 +88,7 @@ Route::post('/logout',[AdminController::class,'destroy']);
 
 
 
-Route::resource('posts', PostController::class)->middleware('post');
+Route::resource('posts', PostController::class)->middleware(['auth','post']);
 Route::resource('comments', CommentController::class)->middleware('auth');
 Route::resource('likes', LikeController::class)->middleware('auth');
 
@@ -93,7 +100,7 @@ Route::get('/403',function(){
 
 
 Route::group([
-    'middleware' => ['category','auth'],
+    'middleware' => ['auth','category'],
 ],function () {
     Route::get('/category',[CategoryController::class,'create'])->middleware('auth');
     Route::post('/category/store',[CategoryController::class,'store'])->name('category.store')->middleware('auth');
@@ -101,19 +108,6 @@ Route::group([
     Route::patch('/category/update/{category}',[CategoryController::class,'update'])->name('category.update')->middleware('auth');
 }
 );
-
-
-
-
-
-
-// Route::group([
-//     'middleware' => ['role','user','auth'],],function(){
-//         Route::resources([
-//             'users' => UserController::class,
-//             'roles' => RoleController::class
-//         ]);
-//     });
 
 Route::resource('users',UserController::class)->middleware('user');
 Route::resource('roles',RoleController::class)->middleware('roles');
@@ -125,3 +119,12 @@ Route::patch('/post/updateState/{post}',[PostController::class,'updateState']);
 Route::patch('/category/updateState/{category}',[CategoryController::class,'updateStatus']);
 Route::post('/updatePermission/{role}',[RoleController::class,'updatepermission']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/notify',[NotifyController::class,'sendMail']);
+
+Route::get('/profile/{lang}',function($lang)
+{
+    App::setlocale($lang);
+    return view('profile');
+});

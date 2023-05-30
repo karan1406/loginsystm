@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PostMail;
 use App\Models\Post;
 use App\Models\Category;
+use App\Notifications\PostNotify;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 
 
-class PostCOntroller extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,7 +43,7 @@ class PostCOntroller extends Controller
         // dd($file);
         $data = request()->validate([
             'category_id' =>  ['required', Rule::exists('categories', 'id')],
-            'name' => 'required',
+            'name' => 'required|unique:posts,name',
             'excerpt' => 'required',
             'slug' => 'required|unique:posts,slug,' . $post->id . '|unique:categories,slug|regex:/(^[a-zA-Z-]+[a-zA-Z-]*$)/u',
             'body' => 'required',
@@ -51,7 +55,11 @@ class PostCOntroller extends Controller
         $data['image'] = '/images/' . $imagename;
         request()->file('image')->move(public_path('images'), $imagename);
         // dd($data);
-        Post::create($data);
+        $post = Post::create($data);
+        $id = $post->id;
+        if ($post->status == 0) {
+            app('App\Http\Controllers\PostMailController')->index($id, $request->name, Auth::user()->email);
+        }
         return redirect('/posts')->with('success', 'Post Added Successfully');
     }
 
@@ -82,8 +90,7 @@ class PostCOntroller extends Controller
                 ->orderBy('updated_at', 'desc')
                 ->get()->take(4);
         }
-     return view('standblog.index',compact('posts','categories'));
-
+        return view('standblog.index', compact('posts', 'categories'));
     }
 
     /**
@@ -97,8 +104,17 @@ class PostCOntroller extends Controller
     public function updateState(Post $post)
     {
         // dd($post);
+
         $data = ['status' => request()->status];
         $post->update($data);
+        $user = $post->user;
+        $user->notify(new PostNotify($post->slug));
+
+        // Notification::send(Auth::user(), new PostNotify($post->slug));
+        // app('App\Http\Controllers\NotifyController')->index($id, $request->name, Auth::user()->email);
+
+
+
     }
 
     /**

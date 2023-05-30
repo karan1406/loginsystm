@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\like;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,7 +45,7 @@ class LikeController extends Controller
             }
             else
             {
-                like::where($data)->update(['status' => $request->status]);
+              like::where($data)->update(['status' => $request->status]);
             }
         }
         else
@@ -53,7 +54,12 @@ class LikeController extends Controller
             $data['status'] = request()->status;
             like::create($data);
         }
-
+        $id = request()->id;
+        $post = Post::findorFail($id);
+        // dd($post);
+        $like = count($post->likes->where('status', 1));
+        $dislike = count($post->likes->where('status', 0));
+        return compact('like','dislike');
     }
 
     /**

@@ -52,7 +52,7 @@
             @endcanany
             @canany(['post access', 'post edit', 'post write','post delete','post publish'])
             <li class="nav-item ">
-                <a href="{{route('posts.index')}}" class="nav-link  {{ (Route::is('posts.index')) ? 'active' : '' }}">
+                <a href="{{route('posts.index')}}" class="nav-link  {{ Str::contains(url()->current(),'posts') ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Manage Post
@@ -62,7 +62,7 @@
             @endcanany
             @canany(['role access', 'role edit', 'role write','role delete'])
             <li class="nav-item ">
-                <a href="{{route('roles.index')}}" class="nav-link  {{ (Route::is('roles.index')) ? 'active' : '' }}"">
+                <a href="{{route('roles.index')}}" class="nav-link  {{ Str::contains(url()->current(),'roles') ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Role and Permission
@@ -72,7 +72,7 @@
             @endcanany
             @canany(['user access', 'user edit', 'user write','user delete'])
             <li class="nav-item ">
-                <a href="{{route('users.index')}}" class="nav-link  {{ (Route::is('users.index')) ? 'active' : '' }}">
+                <a href="{{route('users.index')}}" class="nav-link {{ Str::contains(url()->current(),'user') ? 'active' : '' }}"">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Manage User
@@ -81,7 +81,7 @@
             </li>
             @endcanany
             <li class="nav-item ">
-                <a href="{{route('comments.index')}}" class="nav-link  {{ (Route::is('comments.index')) ? 'active' : '' }}">
+                <a href="{{route('comments.index')}}" class="nav-link  {{ Str::contains(url()->current(),'comment') ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Manage Comment

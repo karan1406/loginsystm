@@ -41,7 +41,7 @@
                 <div class="mt-3">
                     <label for="status">Thumbnail</label>
                 </div>
-                <x-form.input type="file" name="image" id="image" placeholder="Select image"/>
+                <x-form.input type="file" name="image" id="image" placeholder="Select image" />
                 <x-form.error name="image" />
 
                 <button type="submit" class="btn btn-primary">Add Post</button>
@@ -67,6 +67,7 @@
                 , ]
             , }
         , });
+
 
         $('#image').dropify();
     });

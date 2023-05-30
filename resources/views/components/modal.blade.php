@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="categoryModal">
                     {{-- @csrf --}}
                     {{-- <div class="form-group">
                         <label for="name">Name</label>

@@ -70,11 +70,11 @@
                                                     <ul class="post-share">
                                                         <button class="btn btn-success" id="like">
                                                             <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                                                            {{ count($post->likes->where('status', 1)) }}
+                                                            <span id="likecount" style="color:white"> {{ count($post->likes->where('status', 1)) }} </span>
                                                         </button>
                                                         <button class="btn btn-danger" id="dislike">
                                                             <i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i>
-                                                            {{ count($post->likes->where('status', 0)) }}
+                                                            <span id="dislikecount" style="color:white"> {{ count($post->likes->where('status', 0)) }} </span>
                                                         </button>
                                                     </ul>
                                                 </div>
@@ -150,7 +150,9 @@
             },
             success: function(responce) {
                 console.log(responce);
-                window.location.reload();
+                $('#likecount').html(responce.like);
+                $('#dislikecount').html(responce.dislike);
+
             },
             error: function(dataResult) {
                 if (dataResult.status == 401) {
@@ -160,6 +162,7 @@
 
         });
     });
+
     $(document).on('click', '#dislike', function() {
         var id = {{$post->id}};
         var url = " {{ route('likes.store') }}";
@@ -174,7 +177,9 @@
             },
             success: function(responce) {
                 console.log(responce);
-                window.location.reload();
+                $('#likecount').html(responce.like);
+                $('#dislikecount').html(responce.dislike);
+                // window.location.reload();
             },
             error: function(dataResult) {
                 if (dataResult.status == 401) {

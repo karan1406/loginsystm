@@ -40,7 +40,7 @@
 
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-footer-fixed" >
 
     {{ $slot }}
 

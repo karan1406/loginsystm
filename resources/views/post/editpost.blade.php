@@ -43,7 +43,24 @@
                 <x-form.textarea title="Enter Body" placeholder="Enter Description here.." name="body" id="body"> {!! old('name',$posts->body) !!} </x-form.textarea>
                 <x-form.error name="body" />
 
-
+                @role('Super Admin')
+                <label> Status </label>
+                {{-- {{$posts->statu}} --}}
+                <div  class="row">
+                    <div class="form-check ml-6">
+                        <input class="form-check-input" type="radio" name="status" id="staus1" value="1" {{ old('status', $posts->status) == 1 ? 'checked' : ' ' }}>
+                        <label class="form-check-label" for="staus1">
+                          Active
+                        </label>
+                      </div>
+                      <div class="form-check ml-4">
+                        <input class="form-check-input" type="radio" name="status" id="staus2" value="0" {{ old('status', $posts->status) == 0 ? 'checked' : ' ' }}>
+                        <label class="form-check-label" for="staus2">
+                         InActive
+                        </label>
+                      </div>
+                </div>
+                @endrole
 
                 <div class="mt-3">
                     <label for="status">Thumbnail</label>
